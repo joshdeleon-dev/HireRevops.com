@@ -1,7 +1,9 @@
+// Import CSS first - this must happen before React renders to ensure styles are available
+import './src/index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import './src/index.css';
 
 console.log('HireRevOps App Loading...');
 
