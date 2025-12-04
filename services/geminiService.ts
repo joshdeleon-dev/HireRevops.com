@@ -1,12 +1,18 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
-const ai = new GoogleGenAI({ apiKey });
+const apiKey = (import.meta.env.VITE_GEMINI_API_KEY as string) || '';
+let ai: any;
+
+try {
+  ai = new GoogleGenAI({ apiKey });
+} catch (error) {
+  console.error('GoogleGenAI initialization error:', error);
+}
 
 export const generateJobDescription = async (title: string, company: string, location: string): Promise<string> => {
-  if (!apiKey) {
-    console.warn("No API Key found for Gemini");
-    return "AI generation unavailable without API Key. Please write description manually.";
+  if (!apiKey || !ai) {
+    console.warn("Gemini API not configured");
+    return "AI generation unavailable. Please write description manually.";
   }
 
   try {
